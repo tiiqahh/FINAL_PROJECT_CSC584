@@ -1,0 +1,57 @@
+DATABASE MyHotel
+<sql:setDataSource var="myDatasource" 
+                   driver="org.apache.derby.jdbc.ClientDriver" 
+                   url="jdbc:derby://localhost:1527/MyHotel" user="app" 
+                   password="app"/>
+
+CREATE TABLE USERS (
+    USERID INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    NAME VARCHAR(255),
+    PASSWORD VARCHAR(255),
+    EMAIL VARCHAR(255),
+    PHONE_NUM VARCHAR(255)
+);
+
+CREATE TABLE ROOM (
+    ROOMID INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    ROOM_NUM VARCHAR(255),
+    ROOM_NAME VARCHAR(255),
+    PAX INT,
+    PRICE DOUBLE
+);
+
+INSERT INTO APP.ROOM (ROOM_NUM, ROOM_NAME, PAX, PRICE)
+VALUES
+('K01-1', 'Superior King with Sofa Bed', 2, 145.00),
+('K02-1', 'Superior King with Sofa Bed', 2, 145.00),
+('K01-2', 'Superior King with Sofa Bed', 2, 145.00),
+('K02-2', 'Superior King with Sofa Bed', 2, 145.00),
+('T01-1', 'Superior Twin Room', 4, 155.00),
+('T02-1', 'Superior Twin Room', 4, 155.00),
+('T01-2', 'Superior Twin Room', 4, 155.00),
+('T02-2', 'Superior Twin Room', 4, 155.00),
+('FR01-1', 'Family Room-1 King Bed', 6, 175.00),
+('FR02-1', 'Family Room-1 King Bed', 6, 175.00),
+('FR01-2', 'Family Room-1 King Bed', 6, 175.00),
+('FR02-2', 'Family Room-1 King Bed', 6, 175.00),
+('FRS01-1', 'Family Room-1 King + 2 Single Bed', 8, 200.00),
+('FRS02-1', 'Family Room-1 King + 2 Single Bed', 8, 200.00),
+('FRS01-2', 'Family Room-1 King + 2 Single Bed', 8, 200.00),
+('FRS02-2', 'Family Room-1 King + 2 Single Bed', 8, 200.00);
+
+CREATE TABLE STAFF (
+    STAFFID INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    STAFF_EMAIL VARCHAR(255),
+    STAFF_PASS VARCHAR(255)
+);
+
+CREATE TABLE BOOKING (
+    BOOKID INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    USERID INT,
+    ROOMID INT,
+    CHECK_IN DATE,
+    CHECK_OUT DATE,
+    TOTAL INT,
+    FOREIGN KEY (USERID) REFERENCES USERS(USERID),
+    FOREIGN KEY (ROOMID) REFERENCES ROOM(ROOMID)
+);
